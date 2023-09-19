@@ -1,0 +1,32 @@
+[
+	{
+		"name": "dynamic_btn_dashboards",
+		"locators": [
+			"_._:xpath=(//mat-cell[text()='{0}']/following-sibling::mat-cell//mat-icon[normalize-space(text())='dashboard'])[1]"
+		]
+	},
+	{
+		"name": "dynamic_btn_more",
+		"locators": [
+			"_._:xpath=(//mat-cell[text()='{0}']/following-sibling::mat-cell//mat-icon[normalize-space(text())='more_vert'])[1]"
+		]
+	},
+	{
+		"name": "btn_dashboard",
+		"locators": [
+			"_._:xpath=//div[@class='mat-ripple mat-menu-ripple']/preceding-sibling::mat-icon[normalize-space(text())='dashboard']"
+		]
+	},
+	{
+		"name": "btn_search_dashboard",
+		"locators": [
+			"_._:xpath=//mat-toolbar[@class='mat-toolbar mat-table-toolbar mat-toolbar-single-row' and not(@style)]//button[span='search']"
+		]
+	},
+	{
+		"name": "txt_search_dashbaard_field",
+		"locators": [
+			"_._:xpath=//mat-toolbar[@class='mat-toolbar mat-table-toolbar mat-toolbar-single-row' and @style]//input"
+		]
+	}
+]

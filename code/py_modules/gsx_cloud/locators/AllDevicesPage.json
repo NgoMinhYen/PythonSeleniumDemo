@@ -1,0 +1,20 @@
+[
+	{
+		"name": "dynamic_btn_delete",
+		"locators": [
+			"_._:xpath=//mat-cell[text()='{0}']/following-sibling::mat-cell//button[.//mat-icon[normalize-space()='delete']]"
+		]
+	},
+	{
+		"name": "popup_dialog",
+		"locators": [
+			"_._:xpath=//mat-dialog-container"
+		]
+	},
+	{
+		"name": "dynamic_btn_popup_dialog",
+		"locators": [
+			"_._:xpath=//mat-dialog-container//button[span='{0}']"
+		]
+	}
+]

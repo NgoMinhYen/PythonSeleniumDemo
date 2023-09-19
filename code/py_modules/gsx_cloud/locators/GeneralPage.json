@@ -1,0 +1,152 @@
+[
+	{
+		"name": "icon_user_menu",
+		"locators": [
+			"_._:xpath=//tb-user-menu"
+		]
+	},
+	{
+		"name": "btn_user_menu",
+		"locators": [
+			"_._:xpath=//tb-user-menu//button"
+		]
+	},
+	{
+		"name": "dynamic_menu_item",
+		"locators": [
+			"_._:xpath=//span[text()='{0}']"
+		]
+	},
+	{
+		"name": "dynamic_entity",
+		"locators": [
+			"_._:xpath=//mat-cell[text()='{0}']/parent::mat-row"
+		]
+	},
+	{
+		"name": "span_entity_section",
+		"locators": [
+			"_._:xpath=//tb-aliases-entity-select//span[@class='mat-tooltip-trigger']"
+		]
+	},
+	{
+		"name": "tb_current_entity_state_controller",
+		"locators": [
+			"_._:xpath=//div[@class='entity-state-controller']/div/span[last()]"
+		]
+	},
+	{
+		"name": "btn_zoom_in",
+		"locators": [
+			"_._:xpath=//a[@title='Zoom in']"
+		]
+	},
+	{
+		"name": "btn_zoom_out",
+		"locators": [
+			"_._:xpath=//a[@title='Zoom out']"
+		]
+	},
+	{
+		"name": "map_panel_leaflet_zoom_animated",
+		"locators": [
+			"_._:xpath=//div[contains(@class, 'leaflet-proxy') and contains(@class, 'leaflet-zoom-animated')]"
+		]
+	},
+	{
+		"name": "div_rpc_widget_disable",
+		"locators": [
+			"_._:xpath=//div[@class='tb-absolute-fill tb-widget-no-data ng-star-inserted']/span"
+		]
+	},
+	{
+		"name": "btn_search_entity",
+		"locators": [
+			"_._:xpath=//div[@class='tb-widget-title' and not (contains(span,'Timeseries'))]/following-sibling::div[@class='tb-widget-actions']//button[span='search']"
+		]
+	},
+	{
+		"name": "btn_search",
+		"locators": [
+			"_._:xpath=//div[contains(@class,'tb-widget-title')]/span[contains(normalize-space(.),'Devices')]/../following-sibling::div[contains(@class,'tb-widget-actions')]//button[span='search']"
+		]
+	},
+	{
+		"name": "btn_close",
+		"locators": [
+			"_._:xpath=//div[contains(@class, 'tb-widget-content')]//mat-icon[text()='close']"
+		]
+	},
+	{
+		"name": "dynamic_checkbox_rpc_multiple_devices",
+		"locators": [
+			"_._:xpath=//mat-cell[contains(normalize-space(.),'{0}')]//preceding-sibling::mat-cell//mat-checkbox"
+		]
+	},
+	{
+		"name": "txt_search_entity",
+		"locators": [
+			"_._:xpath=//input[@data-placeholder='Search entities']"
+		]
+	},
+	{
+		"name": "lbl_item_per_page",
+		"locators": [
+			"_._:xpath=//div[contains(@class, 'mat-paginator-page-size')]//span[contains(@class, 'mat-select-min-line')]"
+		]
+	},
+	{
+		"name": "lbl_paginator_range",
+		"locators": [
+			"_._:xpath=//div[@class='mat-paginator-range-label']"
+		]
+	},
+	{
+		"name": "realtime_tab",
+		"locators": [
+			"_._:xpath=//mat-fab-actions//div[@class='tb-dashboard-action-panels']//tb-timewindow/section[contains(@class,'tb-timewindow')]"
+		]
+	},
+	{
+		"name": "tb_timeinterval",
+		"locators": [
+			"_._:xpath=//tb-timeinterval//div[contains(@class,'mat-select-arrow-wrapper')]"
+		]
+	},
+	{
+		"name": "tb_timeinterval_option",
+		"locators": [
+			"_._:xpath=//mat-option[span=' {} ']"
+		]
+	},
+	{
+		"name": "tb_timeinterval_update_button",
+		"locators": [
+			"_._:xpath=//tb-timewindow-panel//button[@type='submit' and .=' Update ']"
+		]
+	},
+	{
+		"name": "timeseries_rows_by_dynamic_column",
+		"locators": [
+			"_._:xpath=//div[@class='ag-center-cols-container']//div[@col-id='Device Timestamp']/parent::div[@role='row']/div[count(//span[@class='ag-header-cell-text' and text()='{0}']//ancestor::div[@role='columnheader']/preceding-sibling::div) + 1]//span[contains(@class,'ag-cell-value')]/span"
+		]
+	},
+	{
+		"name": "btn_edit_mode",
+		"locators": [
+			"_._:xpath=//section[contains(@class, 'tb-footer-buttons')]//button[.='edit']"
+		]
+	},
+	{
+		"name": "timeseries_full_screen_btn",
+		"locators": [
+			"_._:xpath=//gridster-item//div[contains(.,'Timeseries')]/../..//mat-icon[text()='fullscreen']"
+		]
+	},
+	{
+		"name": "btn_close_toast_message",
+		"locators": [
+			"_._:xpath=//div[contains(@class, 'toast-text')]/parent::div//button[normalize-space(.)='Close']"
+		]
+	}
+]
