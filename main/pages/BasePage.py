@@ -26,8 +26,14 @@ class BasePage:
         return element.text
 
     def isEnabled(self, byLocator):
-        element = WebDriverWait(self.driver, 20).until(
-            EC.visibility_of_element_located(byLocator))
+        element = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(byLocator))
+        return bool(element)
+        
+    def getAttribute(self,byLocator, attribute):
+        WebDriverWait(self.driver,20).until(EC.visibility_of_element_located(byLocator)).get_attribute(attribute)
+                      
+    def isEnabled(self, byLocator):
+        element = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(byLocator))
         return bool(element)
 
     def getTitle(self, title):

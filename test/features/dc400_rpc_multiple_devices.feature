@@ -1,7 +1,7 @@
 Feature: DC400 RPC Multiple Devices
 
-    Scenario: GSX-4298	User can set FCWS config for a device in RPC Multiple Devices
-        Given Login GSX Cloud
+        Scenario: GSX-4298	User can set FCWS config for a device in RPC Multiple Devices
+            Given Login GSX Cloud
         # And Login with username "phat.ngo+tenant-admin@logigear.com", password "Y9!ynp7GY-XHEKWN"
         And Go to Dashboard groups > DC400 > RPC Multiple Devices DC400
         And Select an active Device 0203030521054073 on the DC400 devices list
