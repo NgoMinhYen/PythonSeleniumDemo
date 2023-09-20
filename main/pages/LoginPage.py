@@ -19,7 +19,6 @@ class LoginPage(BasePage):
 
     def doLoginPage(self, userName, password):
         logger.info("doLoginPage")
-        sleep(15)
         self.wait_for_element_visible(self.EMAIL)
         self.do_sendKeys(self.EMAIL, userName)
         self.do_sendKeys(self.PASSWORD, password)

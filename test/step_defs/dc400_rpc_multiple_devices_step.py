@@ -1,15 +1,11 @@
 import logging
 import pytest
-from selenium.webdriver.firefox.service import Service as FirefoxService
-from webdriver_manager.firefox import GeckoDriverManager
-from pytest_bdd import scenarios, given, when, then, parsers
+from pytest_bdd import scenarios, given, parsers, when, then
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-import sys
+
 from main.pages.LoginPage import LoginPage
-from main.pages.HomePage import HomePage
-from main.pages.DashBoardGroupPage import DashBroardGroup
 from main.pages.rpc_multiple_device_page import RPCMultipleDevicePage
+
 # Constants
 logger = logging.getLogger(__name__)
 from time import sleep
@@ -28,12 +24,13 @@ scenarios('../features/dc400_rpc_multiple_devices.feature')
 def browser():
     logger.info("Create driver")
     driver = webdriver.Chrome()
-    # driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
     driver.implicitly_wait = 30
     driver.maximize_window()
     driver.get(GeoSensorX)
     yield driver
     # driver.quit()
+
+
 # Given Steps
 
 
@@ -45,64 +42,111 @@ def login_page(browser):
     loginPage.doLoginPage(
         "phat.ngo+tenant-admin@logigear.com", "Y9!ynp7GY-XHEKWN")
 
+
 @given("Go to Dashboard groups > DC400 > RPC Multiple Devices DC400")
 def go_to_rpc_multiple_device(browser):
     multiplePage = RPCMultipleDevicePage(browser)
-    sleep(10)
     logger.info("Open daskboard link")
     multiplePage.clickDashBoardGroupLink()
 
-    sleep(10)
     logger.info("Click dc400 link")
     multiplePage.clickOnLink()
 
-    sleep(15)
     logger.info("Open dc400 dasboard button")
     multiplePage.openDashboardDC400()
 
-@given(parsers.parse("Select an active Device {deviceName} on the DC400 devices list"))
+
+@given(parsers.parse("Select an active Device '{deviceName}' on the DC400 devices list"))
 def select_device(browser, deviceName):
-  multiplePage = RPCMultipleDevicePage(browser)
-  logger.info("Click search device button")
-  multiplePage.wait_for_loading_complete()
-  multiplePage.clickButtonSearchDevice()
+    multiplePage = RPCMultipleDevicePage(browser)
+    logger.info("Click search device button")
+    multiplePage.wait_for_loading_complete()
+    multiplePage.clickButtonSearchDevice()
 
-  logger.info('Enter device name')
-  multiplePage.inputDeviceName(deviceName)
+    logger.info('Enter device name')
+    multiplePage.inputDeviceName(deviceName)
 
-  logger.info('Select device')
-  multiplePage.selectDevice(deviceName)
-
-
-@given("Select {string} on RPC Method Description list")
-def select_rpc_method(browser, method):
-  multiplePage = RPCMultipleDevicePage(browser)
-  logger.info('Select RPC Method Description')
-  multiplePage.selectRPCMethod(method)
+    logger.info('Select device')
+    multiplePage.selectDevice(deviceName)
 
 
-@given('Enter {string} on RPC parameters')
+@when(parsers.parse("Select '{rpc_method}' on RPC Method Description list"))
+def select_rpc_method(browser, rpc_method):
+    rpc_method = 'config-set'
+    multiplePage = RPCMultipleDevicePage(browser)
+    logger.info('Select RPC Method Description')
+    multiplePage.selectRPCMethod(rpc_method)
+
+
+@when(parsers.parse("Enter '{params}' on RPC parameters"))
 def select_rpc_method(browser, params):
-  multiplePage = RPCMultipleDevicePage(browser)
-  logger.info('Enter on RPC parameters')
-  multiplePage.inputRPCParameter(params)
+    multiplePage = RPCMultipleDevicePage(browser)
+    logger.info(f'Enter {params} on RPC parameters')
+    multiplePage.inputRPCParameter(params)
 
-@given("Uncheck Clear selection after RPC ?")
+
+@when("Uncheck Clear selection after RPC")
 def uncheck_clear_selecttion_rpc(browser):
-   multiplePage = RPCMultipleDevicePage(browser)
-   logger.info("Uncheck Clear selection after RPC ?")
-   multiplePage.uncheck_clear_selection_after_rpc()
+    multiplePage = RPCMultipleDevicePage(browser)
+    logger.info("Uncheck Clear selection after RPC ?")
+    multiplePage.uncheck_clear_selection_after_rpc()
 
 
-@given("Click Send RPC button")
-def clickSendRPCButton(browser):
-   multiplePage = RPCMultipleDevicePage(browser)
-   logger.info("Click Send RPC button")
-   multiplePage.clickSendRPCButton()
+@then(parsers.parse("Verify RPC command response device: '{device_name}', parameters: '{params}'"))
+def verify_response_config_set(browser, device_name, params):
+    logger.info('verify_response_config_set')
+    # sleep(10)
+    multiplePage = RPCMultipleDevicePage(browser)
+    response = multiplePage.get_value_rpc_response()
+    logger.info(response)
+
+    logger.info("Verify response device name")
+    assert f'name: {device_name}' in response, 'Verify fail device name'
+
+    logger.info("Verify response status")
+    assert 'response: {"status":"success"}' in response, 'Verify fail status'
+
+    logger.info("Verify response method")
+    logger.info(f'method: config-set, params: {params}')
+    assert f'method: config-set, params: {params}' in response, 'Verify fail method'
+
+    logger.info("Verify response status")
+    assert 'status: SUCCESSFUL' in response, 'Verify fail status'
 
 
-@given("Clear response history")
+@when("Click Send RPC button")
+def click_send_rpc_button(browser):
+    multiplePage = RPCMultipleDevicePage(browser)
+    logger.info("Click Send RPC button")
+    multiplePage.clickSendRPCButton()
+    sleep(10)
+
+
+@when("Clear response history")
 def clear_response_history():
     multiplePage = RPCMultipleDevicePage(browser)
     logger.info("Clear response history")
-    multiplePage.clickClearRPCHistoryResponseButton();
+    sleep(10)
+    multiplePage.clickClearRPCHistoryResponseButton()
+
+
+@then(parsers.parse("Verify RPC command get response device: '{device_name}', params: '{params}', value: '{value}'"))
+def verify_response_config_get(browser, device_name, params, value):
+    logger.info('verify_response_config_set')
+    sleep(15)
+    multiplePage = RPCMultipleDevicePage(browser)
+    response = multiplePage.get_value_rpc_response()
+    logger.info(response)
+
+    logger.info("Verify response device name")
+    assert f'name: {device_name}' in response, 'Verify fail device name'
+
+    logger.info("Verify response data")
+    assert f'response: {"data":{value}}' in response, 'Verify fail data'
+
+    logger.info("Verify response method")
+    logger.info(f'method: config-get, params: "{params}"')
+    assert f'method: config-set, params: {params}' in response, 'Verify fail method'
+
+    logger.info("Verify response status")
+    assert 'status: SUCCESSFUL' in response, 'Verify fail status'

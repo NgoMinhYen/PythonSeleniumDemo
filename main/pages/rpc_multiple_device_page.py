@@ -17,11 +17,29 @@ class RPCMultipleDevicePage(BasePage):
     dashboardGroups = (By.XPATH, "//a[@href='/dashboardGroups']")
     dc400 = (By.XPATH, "//tb-menu-link/a[span//span[.='DC400']]")
     BUTTON_DC400_DASBOARD = (
-        By.XPATH, "//mat-cell[span[text()='DC400 RPC Multiple Devices']]/following-sibling::mat-cell//button[.=' dashboard']/span[@class='mat-button-wrapper']")
+        By.XPATH,
+        "//mat-cell[span[text()='DC400 RPC Multiple Devices']]/following-sibling::mat-cell//button[.=' dashboard']/span[@class='mat-button-wrapper']")
+
+    txt_rpc_response = (By.XPATH, "//textarea[@formcontrolname='rpcResponse']")
+    btn_clear_response_history = (
+        By.XPATH, "//button[span[normalize-space(text()) = 'Clear response history']]/span[1]")
+    btn_search_device = (
+        By.XPATH, "//div[contains(@class, 'tb-widget-actions')]/button[span/mat-icon[text()='search']]")
+
+    txt_search = (
+        By.XPATH, "//mat-form-field//input[@data-placeholder='Search entities']")
+    select_rpc_emthod = (
+        By.XPATH, "//mat-form-field//span[.='RPC Method Description']/preceding-sibling::mat-select")
+    txt_rpc_parameter = (
+        By.XPATH,
+        "//div[contains(@class, 'mat-form-field-wrapper')]//span[label/mat-label[text()='RPC parameters']]/preceding-sibling::input")
+    chk_clear_selection_after_rpc = (
+        By.XPATH, "//mat-checkbox/label/span[contains(text(), 'Clear selection after RPC ?')]/preceding-sibling::span")
+    btn_send_rpc = (
+        By.XPATH, "//button[span[normalize-space(text()) = 'Send RPC']]")
 
     def selectDeviceLandingPage(self):
         self.do_click(self.ICON_SEARCH)
-        time.sleep(2)
         self.do_sendKeys(self.INPUT_DEVICE, "0203030521054067")
 
     def selectDeviceInList(self):
@@ -45,16 +63,9 @@ class RPCMultipleDevicePage(BasePage):
         self.wait_for_element_clickable(self.BUTTON_DC400_DASBOARD)
         self.do_click(self.BUTTON_DC400_DASBOARD)
 
-    btn_search_device = (
-        By.XPATH, "//div[contains(@class, 'tb-widget-actions')]/button[span/mat-icon[text()='search']]")
-
     def clickButtonSearchDevice(self):
-        time.sleep(10)
         self.wait_for_element_visible(self.btn_search_device)
         self.do_click(self.btn_search_device)
-
-    txt_search = (
-        By.XPATH, "//mat-form-field//input[@data-placeholder='Search entities']")
 
     def inputDeviceName(self, value):
         self.wait_for_element_visible(self.txt_search)
@@ -66,9 +77,6 @@ class RPCMultipleDevicePage(BasePage):
         self.wait_for_element_clickable(chk_device)
         self.do_click(chk_device)
 
-    select_rpc_emthod = (
-        By.XPATH, "//mat-form-field//span[.='RPC Method Description']/preceding-sibling::mat-select")
-
     def selectRPCMethod(self, value):
         self.do_click(self.select_rpc_emthod)
         xpath = "//div[@role='listbox']/mat-option[span[normalize-space(text()) = '{0}']]".format(
@@ -76,27 +84,25 @@ class RPCMultipleDevicePage(BasePage):
         option = (By.XPATH, xpath)
         self.do_click(option)
 
-    txt_rpc_parameter = (
-        By.XPATH, "//div[contains(@class, 'mat-form-field-wrapper')]//span[label/mat-label[text()='RPC parameters']]/preceding-sibling::input")
-
     def inputRPCParameter(self, value):
         self.wait_for_element_visible(self.txt_rpc_parameter)
+        self.clear_text(self.txt_rpc_parameter)
         self.do_sendKeys(self.txt_rpc_parameter, value)
-
-    chk_clear_selection_after_rpc = (
-        By.XPATH, "//mat-checkbox/label/span[contains(text(), 'Clear selection after RPC ?')]/preceding-sibling::span//input")
 
     def uncheck_clear_selection_after_rpc(self):
         self.do_click(self.chk_clear_selection_after_rpc)
 
-    btn_send_rpc = (
-        By.XPATH, "//button[span[normalize-space(text()) = 'Send RPC']]")
-
     def clickSendRPCButton(self):
         self.do_click(self.btn_send_rpc)
 
-    btn_clear_response_history = (
-        By.XPATH, "//button[span[normalize-space(text()) = 'Clear response history']]")
-
     def clickClearRPCHistoryResponseButton(self):
-        self.do_click(self.btn_clear_response_history)
+        script = "arguments[0].click();"
+        # self.execute_script(script, self.btn_clear_response_history)
+        self.click_by_js(self.btn_clear_response_history)
+
+    def get_value_rpc_response(self):
+        script = "arguments[0].removeAttribute('disabled')"
+        self.execute_script(script, self.txt_rpc_response)
+        self.wait_until_text_box_has_value("//textarea[@formcontrolname='rpcResponse']", 'status: SUCCESSFUL')
+        response = self.getAttribute(self.txt_rpc_response, "value")
+        return response
