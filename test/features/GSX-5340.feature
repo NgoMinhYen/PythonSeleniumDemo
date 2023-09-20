@@ -3,7 +3,9 @@ Feature: The map is zoomed out
             Given Login GSX Cloud
             When Go to Dashboard groups - DC400 - FMS Dashboard
             When Select any device in Landing page to go to Driving Data page
-            And Select any device in Devices list of Driving Data page
+            When Select any device in Devices list of Driving Data page
+            When Click on "-" button on the map widget
+            Then The map is zoomed out
         
 
 
