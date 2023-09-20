@@ -22,7 +22,7 @@ class DashBroardGroup(BasePage):
       
 
     def selectDeviceInList(self):
-       time.sleep(10)
+       time.sleep(2)
        self.do_click(self.CURRENT_DEVICE)
 
     def clickZoomOutButton(self):
