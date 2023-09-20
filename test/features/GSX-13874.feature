@@ -3,3 +3,4 @@ Feature: GSX-13874
             Given Login GSX Cloud
             When Go to Dashboard groups - DC400 - FMS Dashboard
             When Select any device then go to Configuration page
+            When Select the Intrernal LED Enable configuration with a different value

@@ -36,6 +36,7 @@ def login_page(browser):
     loginPage = LoginPage(browser)
     loginPage.doLoginPage("phat.ngo+tenant-admin@logigear.com", "Y9!ynp7GY-XHEKWN")
 
+
 @when('Go to Dashboard groups - DC400 - FMS Dashboard')
 def select_DC400(browser):
     homePage = HomePage(browser)
@@ -45,4 +46,10 @@ def select_DC400(browser):
 def selectDeviceAndGoToConfig(browser):
     dashBoardGroup = DashBroardGroup(browser)
     dashBoardGroup.selectDeviceLandingPage()
-    dashBoardGroup.selectDeviceInList()   
+    dashBoardGroup.selectDeviceInList()
+    dashBoardGroup.clickConfiguration()
+
+@when('Select the Intrernal LED Enable configuration with a different value')
+def selectInternalLed(browser):
+    dashBoardGroup = DashBroardGroup(browser)
+    dashBoardGroup.selectIntrernalLedEnable()
