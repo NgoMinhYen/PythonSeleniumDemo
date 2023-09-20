@@ -11,9 +11,13 @@ class DashBroardGroup(BasePage):
     CURRENT_DEVICE = (By.XPATH,"//table//mat-row/mat-cell")
 
 
-    def selectDevice(seff):
-       seff.do_click(seff.ICON_SEARCH)
+    def selectDeviceLandingPage(self):
+       self.do_click(self.ICON_SEARCH)
        time.sleep(2)
-       seff.do_sendKeys(seff.INPUT_DEVICE,"0203030521054067")
-       seff.do_click(seff.CURRENT_DEVICE)
+       self.do_sendKeys(self.INPUT_DEVICE,"0203030521054067")
+       self.do_click(self.CURRENT_DEVICE)
+
+    def selectDeviceInList(self):
+       self.do_click(self.CURRENT_DEVICE)
+          
 

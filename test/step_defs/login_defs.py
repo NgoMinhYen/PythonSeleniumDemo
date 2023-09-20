@@ -22,7 +22,8 @@ scenarios('../features/GSX-5340.feature')
 
 @pytest.fixture
 def browser():
-    driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
+    driver = webdriver.Chrome()
+    #driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
     driver.get(GeoSensorX)
     driver.maximize_window()
     yield driver
@@ -41,8 +42,14 @@ def select_DC400(browser):
     homePage.select_DC400()
     
 @when('Select any device in Landing page to go to Driving Data page')
-def select_Device(browser):
+def select_Device_LandingPage(browser):
     dashBoardGroup = DashBroardGroup(browser)
-    dashBoardGroup.selectDevice()
+    dashBoardGroup.selectDeviceLandingPage()
+
+@then('Select any device in Devices list of Driving Data page')
+def select_Device_DevicesList(browser):
+    dashBoardGroup = DashBroardGroup(browser)
+    dashBoardGroup.selectDeviceInList()
+
 
     
