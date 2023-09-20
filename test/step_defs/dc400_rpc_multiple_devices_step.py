@@ -60,7 +60,7 @@ def go_to_rpc_multiple_device(browser):
     logger.info("Open dc400 dasboard button")
     multiplePage.openDashboardDC400()
 
-@given(parsers.parse("Select an active Device {string} on the DC400 devices list"))
+@given(parsers.parse("Select an active Device {deviceName} on the DC400 devices list"))
 def select_device(browser, deviceName):
   multiplePage = RPCMultipleDevicePage(browser)
   logger.info("Click search device button")

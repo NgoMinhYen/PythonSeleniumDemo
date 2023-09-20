@@ -17,7 +17,7 @@ class RPCMultipleDevicePage(BasePage):
     dashboardGroups = (By.XPATH, "//a[@href='/dashboardGroups']")
     dc400 = (By.XPATH, "//tb-menu-link/a[span//span[.='DC400']]")
     BUTTON_DC400_DASBOARD = (
-        By.XPATH, "//mat-cell[span[text()='DC400 RPC Multiple Devices']]/following-sibling::mat-cell//button[.=' dashboard']")
+        By.XPATH, "//mat-cell[span[text()='DC400 RPC Multiple Devices']]/following-sibling::mat-cell//button[.=' dashboard']/span[@class='mat-button-wrapper']")
 
     def selectDeviceLandingPage(self):
         self.do_click(self.ICON_SEARCH)
@@ -61,9 +61,9 @@ class RPCMultipleDevicePage(BasePage):
         self.do_sendKeys(self.txt_search, value)
 
     def selectDevice(self, value):
-        xpath = "//mat-cell[text()='{0}']/preceding-sibling::mat-cell/mat-checkbox//input".format(value)
+        xpath = "//mat-cell[text()='{0}']/preceding-sibling::mat-cell/mat-checkbox".format(value)
         chk_device = (By.XPATH, xpath)
-        self.wait_for_element_visible(chk_device)
+        self.wait_for_element_clickable(chk_device)
         self.do_click(chk_device)
 
     select_rpc_emthod = (
