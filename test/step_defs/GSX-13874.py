@@ -14,7 +14,7 @@ GeoSensorX = 'https://staging.geosensorx.ai'
  
 # Scenarios
  
-scenarios('../features/GSX-5340.feature')
+scenarios('../features/GSX-13874.feature')
  
 
 # Fixtures
@@ -40,26 +40,9 @@ def login_page(browser):
 def select_DC400(browser):
     homePage = HomePage(browser)
     homePage.select_DC400()
-    
-@when('Select any device in Landing page to go to Driving Data page')
-def select_Device_LandingPage(browser):
+
+@when('Select any device then go to Configuration page')
+def selectDeviceAndGoToConfig(browser):
     dashBoardGroup = DashBroardGroup(browser)
     dashBoardGroup.selectDeviceLandingPage()
-
-@when('Select any device in Devices list of Driving Data page')
-def select_Device_DevicesList(browser):
-    dashBoardGroup = DashBroardGroup(browser)
-    dashBoardGroup.selectDeviceInList()
-
-@when('Click on "-" button on the map widget')
-def clickZoomOutButton(browser):
-    dashBoardGroup = DashBroardGroup(browser)
-    dashBoardGroup.clickZoomOutButton()
-
-@then('The map is zoomed out')
-def verifyMapZoomOut():
-    dashBoardGroup = DashBroardGroup(browser)
-
-
-
-    
+    dashBoardGroup.selectDeviceInList()   
