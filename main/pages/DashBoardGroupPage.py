@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 from main.pages.BasePage import BasePage
+from main.pages.rpc_multiple_device_page import RPCMultipleDevicePage
 import time
 import logging
 logger = logging.getLogger(__name__)
@@ -25,36 +26,59 @@ class DashBroardGroup(BasePage):
     
 
     def selectDeviceLandingPage(self):
+       self.wait_for_element_clickable(self.ICON_SEARCH)
        self.do_click(self.ICON_SEARCH)
-       #time.sleep(2)
        self.do_sendKeys(self.INPUT_DEVICE,"0203030521054067")
       
 
     def selectDeviceInList(self):
-       self.wait_for_element_clickable(self.CURRENT_DEVICE)
-       time.sleep(5)
-       self.do_click(self.CURRENT_DEVICE)
+       #self.wait_for_element_clickable(self.CURRENT_DEVICE)
+       #self.wait_for_element_clickable(self.CURRENT_DEVICE)
+       #self.do_click(self.CURRENT_DEVICE)
+
+       #xpath = "//mat-cell[text()='{0}']/preceding-sibling::mat-cell/mat-checkbox".format(value)
+       #chk_device = (By.XPATH, xpath)
+        self.wait_for_element_visible(self.CURRENT_DEVICE)
+        self.wait_for_element_clickable(self.CURRENT_DEVICE)
+        loop = 10
+        while loop > 0:
+            class_value = self.getAttribute(self.CURRENT_DEVICE, "class")
+            if "mat-checkbox-checked" not in class_value:
+                try:
+                    self.do_click(self.CURRENT_DEVICE)
+                except:
+                    pass
+                    # self.select_entity_checkbox_by_name(name)
+            else:
+                break
+            time.sleep(1)
+            loop-=1
+        # self.do_click(chk_device)
+       
+
        
 
     def clickZoomInButton(self):
+       self.wait_for_element_clickable(self.BUTTON_ZOOM_IN)
        self.do_click(self.BUTTON_ZOOM_IN)
-       #time.sleep(5)
+      
        logger.info("attribute: " + self.getAttribute(self.ABC,"style"))
        return self.getAttribute(self.ABC,"style")
 
     def clickZoomOutButton(self):
+       self.wait_for_element_clickable(self.BUTTON_ZOOM_OUT)
        self.do_click(self.BUTTON_ZOOM_OUT)
        logger.info("attribute: " + self.getAttribute(self.ABC,"style"))
        return self.getAttribute(self.ABC,"style")
         
 
     def clickConfiguration(self):
-       
+       self.wait_for_element_clickable(self.ICON_CONFIGURATION)
        self.do_click(self.ICON_CONFIGURATION)      
           
-    def selectIntrernalLedEnable(self):
-       pass
-       time.sleep(4)
+    #def selectIntrernalLedEnable(self):
+       #pass
+       #time.sleep(4)
        #self.do_click(self.INTRERNAL_LED_ENABLE)
 
     def selectDifferentValue(self):
@@ -64,18 +88,21 @@ class DashBroardGroup(BasePage):
        if self.get_ElementText(self.VALUE) == "True": 
         self.do_click(self.OPTION_FALSE)
        else: self.do_click(self.OPTION_TRUE)
-       time.sleep(1)
+       
        
     def clickSaveButton(self):
        logger.info("clickSaveButton")
+       self.wait_for_element_clickable(self.SAVE_BUTTON)
        self.click(self.SAVE_BUTTON)
-       time.sleep(10)
+      
 
     def verifyColor(self):
-       blueColor = "rgb(150, 225, 255)"
+       blueColor1 = "rgba(150, 225, 255, 1)"
+       blueColor2 = "rgb(150, 225, 255)"
+       self.wait_for_element_visible(self.INTRERNAL_LED_ENABLE)
        logger.info("AAAAAAAAAA :" + self.getCSSPropertyName(self.INTRERNAL_LED_ENABLE, "background-color"))
        colorChange = self.getCSSPropertyName(self.INTRERNAL_LED_ENABLE, "background-color")
-       assert blueColor == colorChange
+       assert (blueColor1 == colorChange) or (blueColor2 == colorChange)
 
                    
 
