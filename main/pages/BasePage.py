@@ -20,6 +20,9 @@ class BasePage:
         WebDriverWait(self.driver, TIME_OUT).until(
             EC.visibility_of_element_located(byLocator)).click()
 
+    def getCSSPropertyName(self,byLocator, property_name):
+        return WebDriverWait(self.driver, 20).until(EC.presence_of_element_located(byLocator)).value_of_css_property(property_name)    
+
     def click_by_js(self, byLocator):
         logger.info("click_by_js")
         logger.info(byLocator)
@@ -59,6 +62,7 @@ class BasePage:
 
     def wait_for_element_clickable(self, byLocator):
         WebDriverWait(self.driver, TIME_OUT).until(EC.element_to_be_clickable(byLocator))
+
 
     def wait_for_loading_complete(self):
         LOADING = (By.XPATH, "//span[text()='Loading...']")

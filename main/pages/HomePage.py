@@ -7,7 +7,7 @@ class HomePage(BasePage):
 
     DASHBOARD_GROUP = (By.XPATH,"//li[contains(.,'Dashboard groups')]")
     DC400 = (By.XPATH, "//a[contains(.,'DC400')]")
-    FMS_DASHBOARD = (By.XPATH,"//span[contains(.,'DC400 FMS Dashboard')]//parent::mat-cell//following-sibling::mat-cell//span")
+    FMS_DASHBOARD = (By.XPATH,"//mat-cell[span[text()='DC400 FMS Dashboard']]/following-sibling::mat-cell//button[.=' dashboard']/span[@class='mat-button-wrapper']")
     ICON_SEARCH = (By.XPATH,"(//span[contains(.,'search')]//parent::button)[2]")
 
     def select_DC400(self):

@@ -60,3 +60,21 @@ def selectInternalLed(browser):
     logger.info("Select the Intrernal LED Enable configuration with a different value")
     dashBoardGroup = DashBroardGroup(browser)
     dashBoardGroup.selectIntrernalLedEnable()
+    dashBoardGroup.selectDifferentValue()
+    
+
+
+@when('Click the Set button')
+def clickSaveButton():
+    logger.info("Click the Set button")
+    dashBoardGroup = DashBroardGroup(browser)
+    dashBoardGroup.clickSaveButton()
+
+#@then('The Intrernal LED Enable configuration will display with a blue background')
+#def verifyColorBackground():
+    #logger.info('The Intrernal LED Enable configuration will display with a blue background')
+    #dashBoardGroup = DashBroardGroup(browser)
+    #dashBoardGroup.verifyColor()
+    
+
+

@@ -4,8 +4,8 @@ Feature: The map is zoomed out
             When Go to Dashboard groups - DC400 - FMS Dashboard
             When Select any device in Landing page to go to Driving Data page
             When Select any device in Devices list of Driving Data page
-            When Click on "-" button on the map widget
-            Then The map is zoomed out
+            Then Click on "-" button on the map widget and verify the map is zoomed out
+            
         
 
 
