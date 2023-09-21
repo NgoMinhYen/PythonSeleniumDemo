@@ -5,7 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 logger = logging.getLogger(__name__)
 from selenium.webdriver.common.by import By
-
+TIME_OUT = 30
 
 class BasePage:
     def __init__(self, driver):
@@ -23,7 +23,7 @@ class BasePage:
 
     def do_click(self, byLocator):
         logger.info(f"Click in locator {byLocator}")
-        WebDriverWait(self.driver, 20).until(
+        WebDriverWait(self.driver, TIME_OUT).until(
             EC.visibility_of_element_located(byLocator)).click()
 
     def getCSSPropertyName(self,byLocator, property_name):
@@ -35,20 +35,20 @@ class BasePage:
         self.execute_script('arguments[0].click();', byLocator)
 
     def do_sendKeys(self, byLocator, text):
-        WebDriverWait(self.driver, 20).until(
+        WebDriverWait(self.driver, TIME_OUT).until(
             EC.visibility_of_element_located(byLocator)).send_keys(text)
 
     def clear_text(self, byLocator):
-        WebDriverWait(self.driver, 20).until(
+        WebDriverWait(self.driver, TIME_OUT).until(
             EC.visibility_of_element_located(byLocator)).clear()
 
     def get_ElementText(self, byLocator):
-        element = WebDriverWait(self.driver, 20).until(
+        element = WebDriverWait(self.driver, TIME_OUT).until(
             EC.visibility_of_element_located(byLocator))
         return element.text
 
     def isEnabled(self, byLocator):
-        element = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(byLocator))
+        element = WebDriverWait(self.driver, TIME_OUT).until(EC.visibility_of_element_located(byLocator))
         return bool(element)
     
     def getAttribute(self, byLocator, attribute):
@@ -58,7 +58,7 @@ class BasePage:
         #return WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(byLocator)).get_attribute(attribute)
 
     def isEnabled(self, byLocator):
-        element = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(byLocator))
+        element = WebDriverWait(self.driver, TIME_OUT).until(EC.visibility_of_element_located(byLocator))
         return bool(element)
 
     def getTitle(self, title):
@@ -66,23 +66,31 @@ class BasePage:
         return self.driver.title
 
     def wait_for_element_visible(self, byLocator):
-        WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(byLocator))
+        WebDriverWait(self.driver, TIME_OUT).until(EC.visibility_of_element_located(byLocator))
 
     def wait_for_element_clickable(self, byLocator):
-        WebDriverWait(self.driver, 20).until(EC.element_to_be_clickable(byLocator))
+        WebDriverWait(self.driver, TIME_OUT).until(EC.element_to_be_clickable(byLocator))
 
+    def wait_for_element_present_in_element_attribute(self, byLocator, attr, text):
+        logger.info(f"wait_for_element_present_in_element_attribute {attr} {text}")
+        WebDriverWait(self.driver, TIME_OUT).until(EC.text_to_be_present_in_element_attribute(byLocator, attr, text))
 
     def wait_for_loading_complete(self):
         LOADING = (By.XPATH, "//span[text()='Loading...']")
-        WebDriverWait(self.driver, 20).until(EC.invisibility_of_element(LOADING))
+        WebDriverWait(self.driver, TIME_OUT).until(EC.invisibility_of_element(LOADING))
 
+    def wait_for_spinner_invisible(self):
+        logger.info("wait_for_spinner_invisible")
+        SPINNING = (By.XPATH, "//gridster-item//div[mat-spinner[@role='progressbar']][contains(@style, 'display: none')]")
+        WebDriverWait(self.driver, TIME_OUT).until(EC.visibility_of_element_located(SPINNING))
+    
     def execute_script(self, script, byLocator):
         logger.info(f"execute_script {script}")
         self.driver.execute_script(script,
-                                   WebDriverWait(self.driver, 20).until(EC.presence_of_element_located(byLocator)))
+                                   WebDriverWait(self.driver, TIME_OUT).until(EC.presence_of_element_located(byLocator)))
 
     def wait_until_text_box_has_value(self, xpath, value):
-        wait = WebDriverWait(self.driver, 20)
+        wait = WebDriverWait(self.driver, TIME_OUT)
         # wait.until(self.check_value_locator_contains_value(xpath, value))
 
     def check_value_locator_contains_value(self, xpath, value):

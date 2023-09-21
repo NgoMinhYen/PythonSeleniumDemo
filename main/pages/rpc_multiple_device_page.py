@@ -1,6 +1,8 @@
+import logging
 from selenium.webdriver.common.by import By
 from main.pages.BasePage import BasePage
 import time
+logger = logging.getLogger(__name__)
 
 
 class RPCMultipleDevicePage(BasePage):
@@ -22,14 +24,14 @@ class RPCMultipleDevicePage(BasePage):
 
     txt_rpc_response = (By.XPATH, "//textarea[@formcontrolname='rpcResponse']")
     btn_clear_response_history = (
-        By.XPATH, "//button[span[normalize-space(text()) = 'Clear response history']]/span[1]")
+        By.XPATH, "//button/span[normalize-space(.)='Clear response history']")
     btn_search_device = (
         By.XPATH, "//div[contains(@class, 'tb-widget-actions')]/button[span/mat-icon[text()='search']]")
 
     txt_search = (
         By.XPATH, "//mat-form-field//input[@data-placeholder='Search entities']")
     select_rpc_emthod = (
-        By.XPATH, "//mat-form-field//span[.='RPC Method Description']/preceding-sibling::mat-select")
+        By.XPATH, "//mat-form-field//span[normalize-space(.)='RPC Method Description']/preceding-sibling::mat-select")
     txt_rpc_parameter = (
         By.XPATH,
         "//div[contains(@class, 'mat-form-field-wrapper')]//span[label/mat-label[text()='RPC parameters']]/preceding-sibling::input")
@@ -64,25 +66,63 @@ class RPCMultipleDevicePage(BasePage):
         self.do_click(self.BUTTON_DC400_DASBOARD)
 
     def clickButtonSearchDevice(self):
-        self.wait_for_element_visible(self.btn_search_device)
+        # self.wait_for_spinner_invisible()
+        self.wait_for_element_clickable(self.btn_search_device)
         self.do_click(self.btn_search_device)
 
     def inputDeviceName(self, value):
         self.wait_for_element_visible(self.txt_search)
         self.do_sendKeys(self.txt_search, value)
+        xpath = (By.XPATH, f"//mat-cell[normalize-space(.)='{value}']/parent::mat-row")
+        # self.wait_for_element_visible(xpath)
 
     def selectDevice(self, value):
         xpath = "//mat-cell[text()='{0}']/preceding-sibling::mat-cell/mat-checkbox".format(value)
         chk_device = (By.XPATH, xpath)
+        self.wait_for_element_visible(chk_device)
         self.wait_for_element_clickable(chk_device)
-        self.do_click(chk_device)
+        loop = 10
+        while loop > 0:
+            class_value = self.getAttribute(chk_device, "class")
+            if "mat-checkbox-checked" not in class_value:
+                try:
+                    self.do_click(chk_device)
+                except:
+                    pass
+                    # self.select_entity_checkbox_by_name(name)
+            else:
+                break
+            time.sleep(1)
+            loop-=1
+        # self.do_click(chk_device)
 
     def selectRPCMethod(self, value):
+        self.wait_for_element_clickable(self.select_rpc_emthod)
+
+        # loop = 10
+        # while loop > 0:
+        #     class_value = self.getAttribute(self.select_rpc_emthod, "aria-expanded")
+        #     logger.info(f'value class {class_value}')
+        #     if class_value is "false":
+        #         self.do_click(self.select_rpc_emthod)
+        #         self.wait_for_element_present_in_element_attribute(self.select_rpc_emthod, "aria-expanded", "true")
+        #     else:
+        #         break
+        #     time.sleep(1)
+        #     loop-=1
         self.do_click(self.select_rpc_emthod)
+        self.wait_for_element_present_in_element_attribute(self.select_rpc_emthod, "aria-expanded", "true")
         xpath = "//div[@role='listbox']/mat-option[span[normalize-space(text()) = '{0}']]".format(
             value)
         option = (By.XPATH, xpath)
-        self.do_click(option)
+        try:
+            listbox = (By.XPATH, "//div[@role='listbox']")
+            self.wait_for_element_visible(listbox)
+            self.wait_for_element_visible(option)
+            self.do_click(option)
+        except:
+            self.click_by_js(option)
+            
 
     def inputRPCParameter(self, value):
         self.wait_for_element_visible(self.txt_rpc_parameter)
@@ -95,14 +135,21 @@ class RPCMultipleDevicePage(BasePage):
     def clickSendRPCButton(self):
         self.do_click(self.btn_send_rpc)
 
-    def clickClearRPCHistoryResponseButton(self):
+    def click_clear_rpc_history_response_button(self):
         script = "arguments[0].click();"
         # self.execute_script(script, self.btn_clear_response_history)
-        self.click_by_js(self.btn_clear_response_history)
+        self.wait_for_element_clickable(self.btn_clear_response_history)
+        self.do_click(self.btn_clear_response_history)
 
     def get_value_rpc_response(self):
         script = "arguments[0].removeAttribute('disabled')"
         self.execute_script(script, self.txt_rpc_response)
-        self.wait_until_text_box_has_value("//textarea[@formcontrolname='rpcResponse']", 'status: SUCCESSFUL')
-        response = self.getAttribute(self.txt_rpc_response, "value")
-        return response
+        loop = 10
+        while loop > 0:
+            response = self.getAttribute(self.txt_rpc_response, "value")
+            if "status: SUCCESSFUL" in response:
+                return response
+            else:
+                time.sleep(1)
+                loop-=1
+        return self.getAttribute(self.txt_rpc_response, "value")
