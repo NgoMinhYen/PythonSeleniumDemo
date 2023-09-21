@@ -1,6 +1,8 @@
+import logging
 from selenium.webdriver.common.by import By
 from main.pages.BasePage import BasePage
 import time
+logger = logging.getLogger(__name__)
 
 
 class RPCMultipleDevicePage(BasePage):
@@ -29,7 +31,7 @@ class RPCMultipleDevicePage(BasePage):
     txt_search = (
         By.XPATH, "//mat-form-field//input[@data-placeholder='Search entities']")
     select_rpc_emthod = (
-        By.XPATH, "//mat-form-field//span[.='RPC Method Description']/preceding-sibling::mat-select")
+        By.XPATH, "//mat-form-field//span[normalize-space(.)='RPC Method Description']/preceding-sibling::mat-select")
     txt_rpc_parameter = (
         By.XPATH,
         "//div[contains(@class, 'mat-form-field-wrapper')]//span[label/mat-label[text()='RPC parameters']]/preceding-sibling::input")
@@ -95,11 +97,31 @@ class RPCMultipleDevicePage(BasePage):
         # self.do_click(chk_device)
 
     def selectRPCMethod(self, value):
+        self.wait_for_element_clickable(self.select_rpc_emthod)
+
+        # loop = 10
+        # while loop > 0:
+        #     class_value = self.getAttribute(self.select_rpc_emthod, "aria-expanded")
+        #     logger.info(f'value class {class_value}')
+        #     if class_value is "false":
+        #         self.do_click(self.select_rpc_emthod)
+        #         self.wait_for_element_present_in_element_attribute(self.select_rpc_emthod, "aria-expanded", "true")
+        #     else:
+        #         break
+        #     time.sleep(1)
+        #     loop-=1
+
         self.do_click(self.select_rpc_emthod)
+        self.wait_for_element_present_in_element_attribute(self.select_rpc_emthod, "aria-expanded", "true")
         xpath = "//div[@role='listbox']/mat-option[span[normalize-space(text()) = '{0}']]".format(
             value)
         option = (By.XPATH, xpath)
-        self.do_click(option)
+        try:
+            self.wait_for_element_visible(option)
+            self.do_click(option)
+        except:
+            self.click_by_js(option)
+            
 
     def inputRPCParameter(self, value):
         self.wait_for_element_visible(self.txt_rpc_parameter)
@@ -120,6 +142,13 @@ class RPCMultipleDevicePage(BasePage):
     def get_value_rpc_response(self):
         script = "arguments[0].removeAttribute('disabled')"
         self.execute_script(script, self.txt_rpc_response)
-        self.wait_until_text_box_has_value("//textarea[@formcontrolname='rpcResponse']", 'status: SUCCESSFUL')
-        response = self.getAttribute(self.txt_rpc_response, "value")
-        return response
+        self.wait_until_text_box_has_value(self.txt_rpc_response, 'status: SUCCESSFUL')
+        loop = 10
+        while loop > 0:
+            response = self.getAttribute(self.txt_rpc_response, "value")
+            if "status: SUCCESSFUL" in response:
+                return response
+            else:
+                time.sleep(1)
+                loop-=1
+        return self.getAttribute(self.txt_rpc_response, "value")

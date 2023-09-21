@@ -63,6 +63,9 @@ class BasePage:
     def wait_for_element_clickable(self, byLocator):
         WebDriverWait(self.driver, TIME_OUT).until(EC.element_to_be_clickable(byLocator))
 
+    def wait_for_element_present_in_element_attribute(self, byLocator, attr, text):
+        logger.info(f"wait_for_element_present_in_element_attribute {attr} {text}")
+        WebDriverWait(self.driver, TIME_OUT).until(EC.text_to_be_present_in_element_attribute(byLocator, attr, text))
 
     def wait_for_loading_complete(self):
         LOADING = (By.XPATH, "//span[text()='Loading...']")

@@ -66,7 +66,6 @@ def select_device(browser, deviceName):
 
     logger.info('Enter device name')
     multiplePage.inputDeviceName(deviceName)
-    sleep(2)
 
     logger.info('Select device')
     multiplePage.selectDevice(deviceName)
