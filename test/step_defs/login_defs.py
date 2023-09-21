@@ -58,11 +58,7 @@ def select_Device_DevicesList(browser):
     logger.info("Select any device in Devices list of Driving Data page")
     dashBoardGroup = DashBroardGroup(browser)
     dashBoardGroup.selectDeviceInList()
-
-    #multiplePage = RPCMultipleDevicePage(browser)
-    #logger.info('Select device')
-    #multiplePage.selectDevice("0203030521054067")
-    
+  
 
 @then('Click on "-" button on the map widget and verify the map is zoomed out')
 def clickZoomOutButton(browser):
@@ -72,9 +68,7 @@ def clickZoomOutButton(browser):
     after = dashBoardGroup.clickZoomOutButton()
     assert before != after
 
-#@then('The map is zoomed out')
-#def verifyMapZoomOut():
- #  assert before != after
+
 
 
 

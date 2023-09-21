@@ -25,8 +25,8 @@ scenarios('../features/GSX-13874.feature')
 @pytest.fixture
 def browser():
     logger.info("Create driver")
-    driver = webdriver.Chrome()
-    #driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
+    #driver = webdriver.Chrome()
+    driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
     driver.get(GeoSensorX)
     driver.maximize_window()
     yield driver
@@ -65,16 +65,16 @@ def selectInternalLed(browser):
 
 
 @when('Click the Set button')
-def clickSaveButton():
+def clickSaveButton(browser):
     logger.info("Click the Set button")
     dashBoardGroup = DashBroardGroup(browser)
     dashBoardGroup.clickSaveButton()
 
-#@then('The Intrernal LED Enable configuration will display with a blue background')
-#def verifyColorBackground():
-    #logger.info('The Intrernal LED Enable configuration will display with a blue background')
-    #dashBoardGroup = DashBroardGroup(browser)
-    #dashBoardGroup.verifyColor()
+@then('The Intrernal LED Enable configuration will display with a blue background')
+def verifyColorBackground(browser):
+    logger.info('The Intrernal LED Enable configuration will display with a blue background')
+    dashBoardGroup = DashBroardGroup(browser)
+    dashBoardGroup.verifyColor()
     
 
 
