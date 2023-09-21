@@ -59,7 +59,6 @@ def selectDeviceAndGoToConfig(browser):
 def selectInternalLed(browser):
     logger.info("Select the Intrernal LED Enable configuration with a different value")
     dashBoardGroup = DashBroardGroup(browser)
-    dashBoardGroup.selectIntrernalLedEnable()
     dashBoardGroup.selectDifferentValue()
     
 
@@ -74,6 +73,7 @@ def clickSaveButton(browser):
 def verifyColorBackground(browser):
     logger.info('The Intrernal LED Enable configuration will display with a blue background')
     dashBoardGroup = DashBroardGroup(browser)
+    dashBoardGroup.wait_for_loading_complete
     dashBoardGroup.verifyColor()
     
 

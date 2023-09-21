@@ -50,6 +50,7 @@ def select_DC400(browser):
 def select_Device_LandingPage(browser):
     logger.info("Select any device in Landing page to go to Driving Data page")
     dashBoardGroup = DashBroardGroup(browser)
+    dashBoardGroup.wait_for_loading_complete
     dashBoardGroup.selectDeviceLandingPage()
     
 
