@@ -22,7 +22,7 @@ class BasePage:
             EC.presence_of_element_located(byLocator)).click()
 
     def do_click(self, byLocator):
-        logger.info(f"Click in locator {byLocator}")
+        #logger.info(f"Click in locator {byLocator}")
         WebDriverWait(self.driver, TIME_OUT).until(
             EC.visibility_of_element_located(byLocator)).click()
 
@@ -67,6 +67,9 @@ class BasePage:
 
     def wait_for_element_visible(self, byLocator):
         WebDriverWait(self.driver, TIME_OUT).until(EC.visibility_of_element_located(byLocator))
+
+    def wait_for_element_invisible(self, byLocator):
+        WebDriverWait(self.driver, TIME_OUT).until(EC.invisibility_of_element_located(byLocator))    
 
     def wait_for_element_clickable(self, byLocator):
         WebDriverWait(self.driver, TIME_OUT).until(EC.element_to_be_clickable(byLocator))

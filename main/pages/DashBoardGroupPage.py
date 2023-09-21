@@ -20,7 +20,7 @@ class DashBroardGroup(BasePage):
     OPTION_FALSE = (By.XPATH,"//span[@class='mat-option-text' and contains(.,'False')]")
     OPTION_TRUE = (By.XPATH,"//span[@class='mat-option-text' and contains(.,'True')]")
     VALUE = (By.XPATH,"//mat-form-field[contains(.,'Internal LED Enable')]//span[contains(@class,'mat-select-value-text')]")
-
+    LOADING = (By.XPATH, "//mat-spinner[contains(@class,'mat-primary')]//[local-name()='svg']//[local-name()='circle']")  
     SAVE_BUTTON = (By.XPATH,"//button[contains(.,'Save')]")
     
     
@@ -62,13 +62,13 @@ class DashBroardGroup(BasePage):
        self.wait_for_element_clickable(self.BUTTON_ZOOM_IN)
        self.do_click(self.BUTTON_ZOOM_IN)
       
-       logger.info("attribute: " + self.getAttribute(self.ABC,"style"))
+       #logger.info("attribute: " + self.getAttribute(self.ABC,"style"))
        return self.getAttribute(self.ABC,"style")
 
     def clickZoomOutButton(self):
        self.wait_for_element_clickable(self.BUTTON_ZOOM_OUT)
        self.do_click(self.BUTTON_ZOOM_OUT)
-       logger.info("attribute: " + self.getAttribute(self.ABC,"style"))
+       #logger.info("attribute: " + self.getAttribute(self.ABC,"style"))
        return self.getAttribute(self.ABC,"style")
         
 
@@ -94,15 +94,17 @@ class DashBroardGroup(BasePage):
        logger.info("clickSaveButton")
        self.wait_for_element_clickable(self.SAVE_BUTTON)
        self.click(self.SAVE_BUTTON)
+       time.sleep(4)
       
 
     def verifyColor(self):
-       blueColor1 = "rgba(150, 225, 255, 1)"
-       blueColor2 = "rgb(150, 225, 255)"
+       blueColor_Chrome = "rgba(150, 225, 255, 1)"
+       blueColor_Firefox = "rgb(150, 225, 255)"
        self.wait_for_element_visible(self.INTRERNAL_LED_ENABLE)
+       #self.wait_for_element_invisible(self.LOADING)
        logger.info("AAAAAAAAAA :" + self.getCSSPropertyName(self.INTRERNAL_LED_ENABLE, "background-color"))
        colorChange = self.getCSSPropertyName(self.INTRERNAL_LED_ENABLE, "background-color")
-       assert (blueColor1 == colorChange) or (blueColor2 == colorChange)
+       assert (blueColor_Chrome == colorChange) or (blueColor_Firefox == colorChange)
 
                    
 
