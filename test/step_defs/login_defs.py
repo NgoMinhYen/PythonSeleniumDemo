@@ -9,6 +9,7 @@ import sys
 from main.pages.LoginPage import LoginPage
 from main.pages.HomePage import HomePage
 from main.pages.DashBoardGroupPage import DashBroardGroup
+from main.pages.rpc_multiple_device_page import RPCMultipleDevicePage
 logger = logging.getLogger(__name__)
 # Constants
  
@@ -21,12 +22,11 @@ scenarios('../features/GSX-5340.feature')
 
 # Fixtures
 
-
 @pytest.fixture
 def browser():
     logger.info("Create driver")
-    driver = webdriver.Chrome()
-    #driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
+    #driver = webdriver.Chrome()
+    driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
     driver.get(GeoSensorX)
     driver.maximize_window()
     yield driver
@@ -51,22 +51,29 @@ def select_Device_LandingPage(browser):
     logger.info("Select any device in Landing page to go to Driving Data page")
     dashBoardGroup = DashBroardGroup(browser)
     dashBoardGroup.selectDeviceLandingPage()
+    
 
 @when('Select any device in Devices list of Driving Data page')
 def select_Device_DevicesList(browser):
     logger.info("Select any device in Devices list of Driving Data page")
     dashBoardGroup = DashBroardGroup(browser)
     dashBoardGroup.selectDeviceInList()
+    #multiplePage = RPCMultipleDevicePage(browser)
+    #logger.info('Select device')
+    #multiplePage.selectDevice("0203030521054067")
+    
 
-@when('Click on "-" button on the map widget')
+@then('Click on "-" button on the map widget and verify the map is zoomed out')
 def clickZoomOutButton(browser):
     logger.info("Click on '-' button on the map widget")
     dashBoardGroup = DashBroardGroup(browser)
-    dashBoardGroup.clickZoomOutButton()
+    before = dashBoardGroup.clickZoomInButton()
+    after = dashBoardGroup.clickZoomOutButton()
+    assert before != after
 
-@then('The map is zoomed out')
-def verifyMapZoomOut():
-    dashBoardGroup = DashBroardGroup(browser)
+#@then('The map is zoomed out')
+#def verifyMapZoomOut():
+ #  assert before != after
 
 
 
