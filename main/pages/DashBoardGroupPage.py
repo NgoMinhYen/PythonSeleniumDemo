@@ -25,10 +25,10 @@ class DashBroardGroup(BasePage):
     
     
 
-    def selectDeviceLandingPage(self):
+    def selectDeviceLandingPage(self,deviceName):
        self.wait_for_element_clickable(self.ICON_SEARCH)
        self.do_click(self.ICON_SEARCH)
-       self.do_sendKeys(self.INPUT_DEVICE,"0203030521054067")
+       self.do_sendKeys(self.INPUT_DEVICE,deviceName)
       
 
     def selectDeviceInList(self):
