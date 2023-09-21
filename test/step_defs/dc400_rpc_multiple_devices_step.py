@@ -29,7 +29,7 @@ def browser():
     driver.maximize_window()
     driver.get(GeoSensorX)
     yield driver
-    # driver.quit()
+    driver.quit()
 
 
 # Given Steps

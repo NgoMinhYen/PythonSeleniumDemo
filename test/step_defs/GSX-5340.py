@@ -26,8 +26,8 @@ scenarios('../features/GSX-5340.feature')
 @pytest.fixture
 def browser():
     logger.info("Create driver")
-    #driver = webdriver.Chrome()
-    driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
+    driver = webdriver.Chrome()
+    #driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
     driver.get(GeoSensorX)
     driver.maximize_window()
     yield driver
