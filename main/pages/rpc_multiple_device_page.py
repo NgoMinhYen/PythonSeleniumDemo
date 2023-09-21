@@ -142,7 +142,6 @@ class RPCMultipleDevicePage(BasePage):
     def get_value_rpc_response(self):
         script = "arguments[0].removeAttribute('disabled')"
         self.execute_script(script, self.txt_rpc_response)
-        self.wait_until_text_box_has_value(self.txt_rpc_response, 'status: SUCCESSFUL')
         loop = 10
         while loop > 0:
             response = self.getAttribute(self.txt_rpc_response, "value")
