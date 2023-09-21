@@ -73,7 +73,6 @@ def select_device(browser, deviceName):
 
 @when(parsers.parse("Select '{rpc_method}' on RPC Method Description list"))
 def select_rpc_method(browser, rpc_method):
-    rpc_method = 'config-set'
     multiplePage = RPCMultipleDevicePage(browser)
     logger.info('Select RPC Method Description')
     multiplePage.selectRPCMethod(rpc_method)
@@ -123,10 +122,10 @@ def click_send_rpc_button(browser):
 
 
 @when("Clear response history")
-def clear_response_history():
+def clear_response_history(browser):
     multiplePage = RPCMultipleDevicePage(browser)
     logger.info("Clear response history")
-    multiplePage.clickClearRPCHistoryResponseButton()
+    multiplePage.click_clear_rpc_history_response_button()
 
 
 @then(parsers.parse("Verify RPC command get response device: '{device_name}', params: '{params}', value: '{value}'"))

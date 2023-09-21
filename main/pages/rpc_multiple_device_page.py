@@ -110,13 +110,14 @@ class RPCMultipleDevicePage(BasePage):
         #         break
         #     time.sleep(1)
         #     loop-=1
-
         self.do_click(self.select_rpc_emthod)
         self.wait_for_element_present_in_element_attribute(self.select_rpc_emthod, "aria-expanded", "true")
         xpath = "//div[@role='listbox']/mat-option[span[normalize-space(text()) = '{0}']]".format(
             value)
         option = (By.XPATH, xpath)
         try:
+            listbox = (By.XPATH, "//div[@role='listbox']")
+            self.wait_for_element_visible(listbox)
             self.wait_for_element_visible(option)
             self.do_click(option)
         except:
@@ -134,9 +135,10 @@ class RPCMultipleDevicePage(BasePage):
     def clickSendRPCButton(self):
         self.do_click(self.btn_send_rpc)
 
-    def clickClearRPCHistoryResponseButton(self):
+    def click_clear_rpc_history_response_button(self):
         script = "arguments[0].click();"
         # self.execute_script(script, self.btn_clear_response_history)
+        self.wait_for_element_clickable(self.btn_clear_response_history)
         self.do_click(self.btn_clear_response_history)
 
     def get_value_rpc_response(self):
