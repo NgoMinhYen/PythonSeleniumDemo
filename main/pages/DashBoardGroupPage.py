@@ -31,12 +31,13 @@ class DashBroardGroup(BasePage):
 
     def selectDeviceInList(self):
        self.wait_for_element_clickable(self.CURRENT_DEVICE)
-       #time.sleep(10)
+       time.sleep(5)
        self.do_click(self.CURRENT_DEVICE)
-       #time.sleep(20)
+       time.sleep(20)
 
     def clickZoomInButton(self):
        self.do_click(self.BUTTON_ZOOM_IN)
+       time.sleep(10)
        logger.info("attribute: " + self.getAttribute(self.ABC,"style"))
        return self.getAttribute(self.ABC,"style")
 
