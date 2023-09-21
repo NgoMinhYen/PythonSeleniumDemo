@@ -59,12 +59,14 @@ def go_to_rpc_multiple_device(browser):
 @given(parsers.parse("Select an active Device '{deviceName}' on the DC400 devices list"))
 def select_device(browser, deviceName):
     multiplePage = RPCMultipleDevicePage(browser)
-    logger.info("Click search device button")
     multiplePage.wait_for_loading_complete()
+
+    logger.info("Click search device button")
     multiplePage.clickButtonSearchDevice()
 
     logger.info('Enter device name')
     multiplePage.inputDeviceName(deviceName)
+    sleep(2)
 
     logger.info('Select device')
     multiplePage.selectDevice(deviceName)
@@ -119,21 +121,18 @@ def click_send_rpc_button(browser):
     multiplePage = RPCMultipleDevicePage(browser)
     logger.info("Click Send RPC button")
     multiplePage.clickSendRPCButton()
-    sleep(10)
 
 
 @when("Clear response history")
 def clear_response_history():
     multiplePage = RPCMultipleDevicePage(browser)
     logger.info("Clear response history")
-    sleep(10)
     multiplePage.clickClearRPCHistoryResponseButton()
 
 
 @then(parsers.parse("Verify RPC command get response device: '{device_name}', params: '{params}', value: '{value}'"))
 def verify_response_config_get(browser, device_name, params, value):
     logger.info('verify_response_config_set')
-    sleep(15)
     multiplePage = RPCMultipleDevicePage(browser)
     response = multiplePage.get_value_rpc_response()
     logger.info(response)

@@ -22,7 +22,7 @@ class RPCMultipleDevicePage(BasePage):
 
     txt_rpc_response = (By.XPATH, "//textarea[@formcontrolname='rpcResponse']")
     btn_clear_response_history = (
-        By.XPATH, "//button[span[normalize-space(text()) = 'Clear response history']]/span[1]")
+        By.XPATH, "//button/span[normalize-space(.)='Clear response history']")
     btn_search_device = (
         By.XPATH, "//div[contains(@class, 'tb-widget-actions')]/button[span/mat-icon[text()='search']]")
 
@@ -64,18 +64,35 @@ class RPCMultipleDevicePage(BasePage):
         self.do_click(self.BUTTON_DC400_DASBOARD)
 
     def clickButtonSearchDevice(self):
-        self.wait_for_element_visible(self.btn_search_device)
+        # self.wait_for_spinner_invisible()
+        self.wait_for_element_clickable(self.btn_search_device)
         self.do_click(self.btn_search_device)
 
     def inputDeviceName(self, value):
         self.wait_for_element_visible(self.txt_search)
         self.do_sendKeys(self.txt_search, value)
+        xpath = (By.XPATH, f"//mat-cell[normalize-space(.)='{value}']/parent::mat-row")
+        # self.wait_for_element_visible(xpath)
 
     def selectDevice(self, value):
         xpath = "//mat-cell[text()='{0}']/preceding-sibling::mat-cell/mat-checkbox".format(value)
         chk_device = (By.XPATH, xpath)
+        self.wait_for_element_visible(chk_device)
         self.wait_for_element_clickable(chk_device)
-        self.do_click(chk_device)
+        loop = 10
+        while loop > 0:
+            class_value = self.getAttribute(chk_device, "class")
+            if "mat-checkbox-checked" not in class_value:
+                try:
+                    self.do_click(chk_device)
+                except:
+                    pass
+                    # self.select_entity_checkbox_by_name(name)
+            else:
+                break
+            time.sleep(1)
+            loop-=1
+        # self.do_click(chk_device)
 
     def selectRPCMethod(self, value):
         self.do_click(self.select_rpc_emthod)
@@ -98,7 +115,7 @@ class RPCMultipleDevicePage(BasePage):
     def clickClearRPCHistoryResponseButton(self):
         script = "arguments[0].click();"
         # self.execute_script(script, self.btn_clear_response_history)
-        self.click_by_js(self.btn_clear_response_history)
+        self.do_click(self.btn_clear_response_history)
 
     def get_value_rpc_response(self):
         script = "arguments[0].removeAttribute('disabled')"
