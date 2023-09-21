@@ -13,8 +13,8 @@ class DashBroardGroup(BasePage):
     INPUT_DEVICE = (By.XPATH,"//input[@data-placeholder='Search entities']")
     CURRENT_DEVICE = (By.XPATH,"//table//mat-row/mat-cell")
     ICON_CONFIGURATION = (By.XPATH,"//div[@fxlayoutalign='end']//mat-icon[.='settings']")
-    BUTTON_ZOOM_OUT = (By.XPATH,"//a[@title='Zoom out']")
-    BUTTON_ZOOM_IN = (By.XPATH,"//a[@title='Zoom in']")
+    BUTTON_ZOOM_IN = (By.XPATH,"//a[@title='Zoom out']")
+    BUTTON_ZOOM_OUT = (By.XPATH,"//a[@title='Zoom in']")
     INTRERNAL_LED_ENABLE = (By.XPATH,"//mat-form-field[contains(.,'Internal LED Enable')]")
     STYLE = (By.XPATH,"//div[@class='leaflet-proxy leaflet-zoom-animated']")
     OPTION_FALSE = (By.XPATH,"//span[@class='mat-option-text' and contains(.,'False')]")
@@ -67,7 +67,7 @@ class DashBroardGroup(BasePage):
 
     def clickZoomOutButton(self):
        self.wait_for_element_clickable(self.BUTTON_ZOOM_OUT)
-       self.do_click(self.BUTTON_ZOOM_IN)
+       self.do_click(self.BUTTON_ZOOM_OUT)
        logger.info("attribute: " + self.getAttribute(self.STYLE,"style"))
        return self.getAttribute(self.STYLE,"style")
         
