@@ -16,7 +16,7 @@ class DashBroardGroup(BasePage):
     BUTTON_ZOOM_OUT = (By.XPATH,"//a[@title='Zoom out']")
     BUTTON_ZOOM_IN = (By.XPATH,"//a[@title='Zoom in']")
     INTRERNAL_LED_ENABLE = (By.XPATH,"//mat-form-field[contains(.,'Internal LED Enable')]")
-    ABC = (By.XPATH,"//div[@class='leaflet-proxy leaflet-zoom-animated']")
+    STYLE = (By.XPATH,"//div[@class='leaflet-proxy leaflet-zoom-animated']")
     OPTION_FALSE = (By.XPATH,"//span[@class='mat-option-text' and contains(.,'False')]")
     OPTION_TRUE = (By.XPATH,"//span[@class='mat-option-text' and contains(.,'True')]")
     VALUE = (By.XPATH,"//mat-form-field[contains(.,'Internal LED Enable')]//span[contains(@class,'mat-select-value-text')]")
@@ -58,18 +58,18 @@ class DashBroardGroup(BasePage):
 
        
 
-    def clickZoomInButton(self):
+    def getValueStyleCurent(self):
        self.wait_for_element_clickable(self.BUTTON_ZOOM_IN)
-       self.do_click(self.BUTTON_ZOOM_IN)
+       #self.do_click(self.BUTTON_ZOOM_IN)
       
-       #logger.info("attribute: " + self.getAttribute(self.ABC,"style"))
-       return self.getAttribute(self.ABC,"style")
+       logger.info("attribute01: " + self.getAttribute(self.STYLE,"style"))
+       return self.getAttribute(self.STYLE,"style")
 
     def clickZoomOutButton(self):
        self.wait_for_element_clickable(self.BUTTON_ZOOM_OUT)
-       self.do_click(self.BUTTON_ZOOM_OUT)
-       #logger.info("attribute: " + self.getAttribute(self.ABC,"style"))
-       return self.getAttribute(self.ABC,"style")
+       self.do_click(self.BUTTON_ZOOM_IN)
+       logger.info("attribute: " + self.getAttribute(self.STYLE,"style"))
+       return self.getAttribute(self.STYLE,"style")
         
 
     def clickConfiguration(self):

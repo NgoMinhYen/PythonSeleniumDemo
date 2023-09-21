@@ -71,7 +71,7 @@ def clickZoomOutButton(browser):
     with step("Click on '-' button on the map widget and verify the map is zoomed out"):
         logger.info("Click on '-' button on the map widget")
         dashBoardGroup = DashBroardGroup(browser)
-        before = dashBoardGroup.clickZoomInButton()
+        before = dashBoardGroup.getValueStyleCurent()
         after = dashBoardGroup.clickZoomOutButton()
         assert before != after
 
