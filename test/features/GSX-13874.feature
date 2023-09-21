@@ -5,4 +5,4 @@ Feature: GSX-13874
             When Select any device then go to Configuration page
             When Select the Intrernal LED Enable configuration with a different value
             When Click the Set button
-            #Then The Intrernal LED Enable configuration will display with a blue background
+            Then The Intrernal LED Enable configuration will display with a blue background

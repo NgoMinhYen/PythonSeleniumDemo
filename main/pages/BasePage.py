@@ -14,6 +14,12 @@ class BasePage:
     def get_element(self, byLocator):
         logger.info('get_element')
         return self.driver.find_element(byLocator)
+    
+    def click(self, byLocator):
+        logger.info("Click in locator")
+        logger.info(byLocator)
+        WebDriverWait(self.driver, 20).until(
+            EC.presence_of_element_located(byLocator)).click()
 
     def do_click(self, byLocator):
         logger.info(f"Click in locator {byLocator}")
@@ -44,10 +50,12 @@ class BasePage:
     def isEnabled(self, byLocator):
         element = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(byLocator))
         return bool(element)
-
+    
     def getAttribute(self, byLocator, attribute):
-        return WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(byLocator)).get_attribute(
-            attribute)
+        return WebDriverWait(self.driver, 20).until(EC.presence_of_element_located(byLocator)).get_attribute(attribute)
+    
+    #def getAttribute(self, byLocator, attribute):
+        #return WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(byLocator)).get_attribute(attribute)
 
     def isEnabled(self, byLocator):
         element = WebDriverWait(self.driver, 20).until(EC.visibility_of_element_located(byLocator))

@@ -22,6 +22,7 @@ class DashBroardGroup(BasePage):
 
     SAVE_BUTTON = (By.XPATH,"//button[contains(.,'Save')]")
     
+    
 
     def selectDeviceLandingPage(self):
        self.do_click(self.ICON_SEARCH)
@@ -33,11 +34,11 @@ class DashBroardGroup(BasePage):
        self.wait_for_element_clickable(self.CURRENT_DEVICE)
        time.sleep(5)
        self.do_click(self.CURRENT_DEVICE)
-       time.sleep(20)
+       
 
     def clickZoomInButton(self):
        self.do_click(self.BUTTON_ZOOM_IN)
-       time.sleep(10)
+       #time.sleep(5)
        logger.info("attribute: " + self.getAttribute(self.ABC,"style"))
        return self.getAttribute(self.ABC,"style")
 
@@ -66,9 +67,15 @@ class DashBroardGroup(BasePage):
        time.sleep(1)
        
     def clickSaveButton(self):
+       logger.info("clickSaveButton")
        self.click(self.SAVE_BUTTON)
+       time.sleep(10)
 
     def verifyColor(self):
-       self.getCSSPropertyName(self.INTRERNAL_LED_ENABLE, "background-color")
+       blueColor = "rgb(150, 225, 255)"
+       logger.info("AAAAAAAAAA :" + self.getCSSPropertyName(self.INTRERNAL_LED_ENABLE, "background-color"))
+       colorChange = self.getCSSPropertyName(self.INTRERNAL_LED_ENABLE, "background-color")
+       assert blueColor == colorChange
+
                    
 
