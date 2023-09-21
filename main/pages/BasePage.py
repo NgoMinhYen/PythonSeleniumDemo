@@ -2,14 +2,20 @@ import logging
 from selenium.webdriver import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.webdriver import WebDriver
 
 logger = logging.getLogger(__name__)
 from selenium.webdriver.common.by import By
 TIME_OUT = 30
 
 class BasePage:
+    driver: WebDriver
     def __init__(self, driver):
         self.driver = driver
+
+    @staticmethod
+    def get_driver(self):
+        return self.driver
 
     def get_element(self, byLocator):
         logger.info('get_element')

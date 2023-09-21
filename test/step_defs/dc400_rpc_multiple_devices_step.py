@@ -16,7 +16,7 @@ GeoSensorX = 'https://staging.geosensorx.ai'
 # Scenarios
 
 scenarios('../features/dc400_rpc_multiple_devices.feature')
-
+from datetime import datetime
 
 # Fixtures
 
@@ -37,6 +37,7 @@ def browser():
 
 @given('Login GSX Cloud')
 def login_page(browser):
+    # logger.info(datetime.now())
     with step("Login GSX Cloud"):
         logger.info("Login")
         browser.get(GeoSensorX)
@@ -146,7 +147,11 @@ def verify_response_config_get(browser, device_name, params, value):
         assert f'name: {device_name}' in response, 'Verify fail device name'
 
         logger.info("Verify response data")
-        assert f'response: \{"data":{value}\}' in response, 'Verify fail data'
+        response_data = 'response: {"data":' + value + '}'
+        logger.info(response_data)
+        # logger.info(datetime.now())
+        assert response_data in response, 'Verify fail data'
+        # logger.info(datetime.now())
 
         logger.info("Verify response method")
         logger.info(f'method: config-get, params: "{params}"')
