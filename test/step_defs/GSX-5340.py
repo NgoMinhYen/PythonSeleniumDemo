@@ -34,13 +34,13 @@ def browser():
     driver.quit()
 # Given Steps
 
-@given('Login GSX Cloud')
-def login_page(browser):
-    logger.info("Login")
+@given(parsers.parse("Login GSX Cloud with username '{username}' and password '{password}'"))
+def login_page(browser, username, password):
+    logger.info("Login GSX Cloud")
     with step("Login GSX Cloud"):
         browser.get(GeoSensorX)
         loginPage = LoginPage(browser)
-        loginPage.doLoginPage("phat.ngo+tenant-admin@logigear.com", "Y9!ynp7GY-XHEKWN")
+        loginPage.doLoginPage(username, password)
 
 @when('Go to Dashboard groups > DC400 > RPC Multiple Devices DC400')
 def select_DC400(browser):

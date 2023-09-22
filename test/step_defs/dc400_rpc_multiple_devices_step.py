@@ -25,7 +25,7 @@ from datetime import datetime
 def browser():
     logger.info("Create driver")
     driver = webdriver.Chrome()
-    driver.implicitly_wait = 30
+    # driver.implicitly_wait = 30
     driver.maximize_window()
     driver.get(GeoSensorX)
     yield driver
@@ -35,15 +35,14 @@ def browser():
 # Given Steps
 
 
-@given('Login GSX Cloud')
-def login_page(browser):
+@given(parsers.parse("Login GSX Cloud with username '{username}' and password '{password}'"))
+def login_page(browser, username, password):
     # logger.info(datetime.now())
     with step("Login GSX Cloud"):
-        logger.info("Login")
+        logger.info("Login GSX Cloud")
         browser.get(GeoSensorX)
         loginPage = LoginPage(browser)
-        loginPage.doLoginPage(
-            "phat.ngo+tenant-admin@logigear.com", "Y9!ynp7GY-XHEKWN")
+        loginPage.doLoginPage(username, password)
 
 
 @given("Go to Dashboard groups > DC400 > RPC Multiple Devices DC400")
