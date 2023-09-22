@@ -28,7 +28,7 @@ class BasePage:
             EC.presence_of_element_located(byLocator)).click()
 
     def do_click(self, byLocator):
-        logger.info(f"Click in locator {byLocator}")
+        # logger.info(f"Click in locator {byLocator}")
         WebDriverWait(self.driver, TIME_OUT).until(
             EC.visibility_of_element_located(byLocator)).click()
 
@@ -37,7 +37,7 @@ class BasePage:
 
     def click_by_js(self, byLocator):
         logger.info("click_by_js")
-        logger.info(byLocator)
+        # logger.info(byLocator)
         self.execute_script('arguments[0].click();', byLocator)
 
     def do_sendKeys(self, byLocator, text):
