@@ -34,13 +34,13 @@ def browser():
     driver.quit()
 # Given Steps
 
-@given('Login GSX Cloud')
-def login_page(browser):
+@given(parsers.parse("Login GSX Cloud with email '{username}' and password '{password}'"))
+def login_page(browser, username, password):
     logger.info("Login")
     with step("Login GSX Cloud"):
         browser.get(GeoSensorX)
         loginPage = LoginPage(browser)
-        loginPage.doLoginPage("phat.ngo+tenant-admin@logigear.com", "Y9!ynp7GY-XHEKWN")
+        loginPage.doLoginPage(username, password)
 
 @when('Go to Dashboard groups > DC400 > RPC Multiple Devices DC400')
 def select_DC400(browser):
@@ -48,32 +48,39 @@ def select_DC400(browser):
         logger.info("Open daskboard link")
         homePage = HomePage(browser)
         homePage.select_DC400()
-    
-@when(parsers.parse("Select an active Device '{deviceName}' on the DC400 devices list"))
-def select_Device_LandingPage(browser,deviceName):
-    with step("Select an active Device {deviceName} on the DC400 devices list"):
-        logger.info("Select any device in Landing page to go to Driving Data page")
-        dashBoardGroup = DashBroardGroup(browser)
-        dashBoardGroup.wait_for_loading_complete
-        dashBoardGroup.selectDeviceLandingPage(deviceName)
-    
+       
 
-@when('Select any device in Devices list of Driving Data page')
-def select_Device_DevicesList(browser):
-    with step("Select any device in Devices list of Driving Data page"):
-        logger.info("Select any device in Devices list of Driving Data page")
+@when(parsers.parse("Search device with device id: '{deviceID}'"))
+def select_Device_DevicesList(browser,deviceID):
+    with step("Search device with device id: '{deviceID}'"):
+        logger.info("Search device with device id: '{deviceID}'")
         dashBoardGroup = DashBroardGroup(browser)
+        dashBoardGroup.selectDeviceLandingPage(deviceID)
         dashBoardGroup.selectDeviceInList()
   
 
-@then('Click on "-" button on the map widget and verify the map is zoomed out')
-def clickZoomOutButton(browser):
-    with step("Click on '-' button on the map widget and verify the map is zoomed out"):
-        logger.info("Click on '-' button on the map widget")
-        dashBoardGroup = DashBroardGroup(browser)
-        before = dashBoardGroup.getValueStyleCurent()
-        after = dashBoardGroup.clickZoomOutButton()
-        assert before != after
+#@then('Click on "-" button on the map widget and verify the map is zoomed out')
+#def clickZoomOutButton(browser):
+    #with step("Click on '-' button on the map widget and verify the map is zoomed out"):
+        #logger.info("Click on '-' button on the map widget")
+        #dashBoardGroup = DashBroardGroup(browser)
+        #before = dashBoardGroup.getValueStyleCurent()
+        #after = dashBoardGroup.clickZoomOutButton()
+        #assert before != after
+@then(parsers.parse("Expected: Device: '{deviceID}' is displayed"))
+def verifyDeviceNameIsDisplayed(browser):
+    with step("Expected: Device: '{deviceID}' is displayed"):
+           logger.info("Expected: Device: '{deviceID}' is displayed")
+           dashBoardGroup = DashBroardGroup(browser)
+           assert dashBoardGroup.verifyIsDisplayedDeviceName() == True
+
+@when(parsers.parse("Click '{configration}' icon in device item"))
+def goToConfigration(browser):
+    with step("Click '{configration}' icon in device item"):
+           logger.info("Click '{configration}' icon in device item")
+           dashBoardGroup = DashBroardGroup(browser)
+
+
 
 
 

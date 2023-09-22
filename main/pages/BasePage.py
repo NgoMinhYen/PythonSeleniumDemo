@@ -57,6 +57,10 @@ class BasePage:
         element = WebDriverWait(self.driver, TIME_OUT).until(EC.visibility_of_element_located(byLocator))
         return bool(element)
     
+    def isDisplayed(self, byLocator):
+        return WebDriverWait(self.driver, TIME_OUT).until(EC.presence_of_element_located(byLocator)).is_displayed()
+                
+    
     def getAttribute(self, byLocator, attribute):
         return WebDriverWait(self.driver, 20).until(EC.presence_of_element_located(byLocator)).get_attribute(attribute)
     
