@@ -23,12 +23,12 @@ class BasePage:
     
     def click(self, byLocator):
         logger.info("Click in locator")
-        logger.info(byLocator)
+        # logger.info(byLocator)
         WebDriverWait(self.driver, 20).until(
             EC.presence_of_element_located(byLocator)).click()
 
     def do_click(self, byLocator):
-        #logger.info(f"Click in locator {byLocator}")
+        logger.info(f"Click in locator {byLocator}")
         WebDriverWait(self.driver, TIME_OUT).until(
             EC.visibility_of_element_located(byLocator)).click()
 

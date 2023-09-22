@@ -18,7 +18,7 @@ GeoSensorX = 'https://staging.geosensorx.ai'
 
 # Scenarios
 
-scenarios('../features/GSX-5340.feature')
+scenarios('../features/dc400_configuration.feature')
 
 
 # Fixtures
@@ -58,7 +58,7 @@ def select_Device_DevicesList(browser, deviceID):
         logger.info(f"Search device with device id: '{deviceID}'")
         dashBoardGroup = DashBroardGroup(browser)
         dashBoardGroup.selectDeviceLandingPage(deviceID)
-        # dashBoardGroup.selectDeviceInList()
+        dashBoardGroup.selectDeviceInList()
 
 
 # @then('Click on "-" button on the map widget and verify the map is zoomed out')
@@ -77,12 +77,12 @@ def verifyDeviceNameIsDisplayed(browser, deviceID):
         assert dashBoardGroup.verifyIsDisplayedDeviceName(deviceID) == True
 
 
-@when("Click (Go to configuration) icon in device item")
-def goToConfiguration(browser):
-    with step("Click (Go to configuration) icon in device item"):
-        logger.info("Click (Go to configuration) icon in device item")
+@when(parsers.parse("Click (Go to configuration) icon in device item '{deviceID}'"))
+def goToConfiguration(browser, deviceID):
+    with step(f"Click (Go to configuration) icon in device item '{deviceID}'"):
+        logger.info(f"Click (Go to configuration) icon in device item '{deviceID}'")
         dashBoardGroup = DashBroardGroup(browser)
-        dashBoardGroup.clickConfiguration()
+        dashBoardGroup.go_to_configuration_page(deviceID)
 
 @then(parsers.parse("Device '{deviceID}' configuration page is displayed"))
 def verify_configuration_device_page_displayed(browser, deviceID):

@@ -15,7 +15,7 @@ class DashBroardGroup(BasePage):
     INPUT_DEVICE = (By.XPATH, "//input[@data-placeholder='Search entities']")
     CURRENT_DEVICE = (By.XPATH, "//table//mat-row/mat-cell")
     ICON_CONFIGURATION = (
-        By.XPATH, "//div[@fxlayoutalign='end']//mat-icon[.='settings']")
+        By.XPATH, "//button[.='settings']")
     BUTTON_ZOOM_OUT = (By.XPATH, "//a[@title='Zoom out']")
     BUTTON_ZOOM_IN = (By.XPATH, "//a[@title='Zoom in']")
     INTRERNAL_LED_ENABLE = (
@@ -33,11 +33,15 @@ class DashBroardGroup(BasePage):
 
     LBL_DEVICE_CONFIGURATION_WIGET = (
         By.XPATH, "//div/span[normalize-space(text())='Device configuration widget']")
+    LOADING_SEARCH_DEVICE = (By.XPATH, "//span[contains(@style, 'display: flex') and text()='Loading...']")
 
     def selectDeviceLandingPage(self, deviceName):
         self.wait_for_element_clickable(self.ICON_SEARCH)
         self.do_click(self.ICON_SEARCH)
         self.do_sendKeys(self.INPUT_DEVICE, deviceName)
+        logger.info('Wait loading search device')
+        self.wait_for_element_invisible(self.LOADING_SEARCH_DEVICE)
+        logger.info('Wait loading search device complete')
 
     def selectDeviceInList(self):
         # self.wait_for_element_clickable(self.CURRENT_DEVICE)
@@ -119,9 +123,9 @@ class DashBroardGroup(BasePage):
         self.wait_for_element_visible(DEVICE_NAME)
         return self.isDisplayed(DEVICE_NAME)
 
-    def goToConfigration(self, configration):
-        self.wait_for_element_visible(self.ICON_CONFIGURATION)
-        self.do_click(self.ICON_CONFIGURATION)
+    def go_to_configuration_page(self, deviceID):
+        xpath = (By.XPATH, f"//mat-cell[normalize-space(.)='{deviceID}']/parent::mat-row//mat-icon[normalize-space(.)='settings']")
+        self.click(xpath)
 
     def is_displayed_label_device_configuration_wiget(self):
         self.wait_for_element_visible(self.LBL_DEVICE_CONFIGURATION_WIGET)
