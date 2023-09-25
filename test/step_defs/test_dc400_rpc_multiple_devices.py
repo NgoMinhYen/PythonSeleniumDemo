@@ -77,7 +77,7 @@ def select_device(browser, deviceName):
         multiplePage.selectDevice(deviceName)
 
 
-@when(parsers.parse("Select {rpc_method} on RPC Method Description list"))
+@when(parsers.parse("Select '{rpc_method}' on RPC Method Description list"))
 def select_rpc_method(browser, rpc_method):
     with step(f"Select '{rpc_method}' on RPC Method Description list"):
         multiplePage = RPCMultipleDevicePage(browser)

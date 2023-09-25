@@ -1,5 +1,5 @@
 Feature: Test DC400 Configuration Page
-    # @regression
+    @testcase
     Scenario Outline: GSX-3529 - User can select Go to configuration option to go to Configuration page
         Given Login GSX Cloud with email <email> and password <password>
         When Go to Dashboard groups > DC400 > RPC Multiple Devices DC400
