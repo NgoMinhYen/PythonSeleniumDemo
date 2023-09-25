@@ -35,13 +35,13 @@ def browser():
 # Given Steps
 
 
-@given(parsers.parse("Login GSX Cloud with email '{username}' and password '{password}'"))
-def login_page(browser, username, password):
+@given(parsers.parse("Login GSX Cloud with email {email} and password {password}"))
+def login_page(browser, email, password):
     logger.info("Login")
     with step("Login GSX Cloud"):
         browser.get(GeoSensorX)
         loginPage = LoginPage(browser)
-        loginPage.doLoginPage(username, password)
+        loginPage.doLoginPage(email, password)
 
 
 @when('Go to Dashboard groups > DC400 > RPC Multiple Devices DC400')
@@ -52,10 +52,10 @@ def select_DC400(browser):
         homePage.select_DC400()
 
 
-@when(parsers.parse("Search device with device id: '{deviceID}'"))
+@when(parsers.parse("Search device with device id: {deviceID}"))
 def select_Device_DevicesList(browser, deviceID):
-    with step(f"Search device with device id: '{deviceID}'"):
-        logger.info(f"Search device with device id: '{deviceID}'")
+    with step(f"Search device with device id: {deviceID}"):
+        logger.info(f"Search device with device id: {deviceID}")
         dashBoardGroup = DashBroardGroup(browser)
         dashBoardGroup.selectDeviceLandingPage(deviceID)
         dashBoardGroup.selectDeviceInList()
@@ -69,25 +69,25 @@ def select_Device_DevicesList(browser, deviceID):
         # before = dashBoardGroup.getValueStyleCurent()
         # after = dashBoardGroup.clickZoomOutButton()
         # assert before != after
-@then(parsers.parse("Expected: Device: '{deviceID}' is displayed"))
+@then(parsers.parse("Expected: Device: {deviceID} is displayed"))
 def verifyDeviceNameIsDisplayed(browser, deviceID):
-    with step(f"Expected: Device: '{deviceID}' is displayed"):
-        logger.info(f"Expected: Device: '{deviceID}' is displayed")
+    with step(f"Expected: Device: {deviceID} is displayed"):
+        logger.info(f"Expected: Device: {deviceID} is displayed")
         dashBoardGroup = DashBroardGroup(browser)
         assert dashBoardGroup.verifyIsDisplayedDeviceName(deviceID) == True
 
 
-@when(parsers.parse("Click (Go to configuration) icon in device item '{deviceID}'"))
+@when(parsers.parse("Click (Go to configuration) icon in device item {deviceID}"))
 def goToConfiguration(browser, deviceID):
-    with step(f"Click (Go to configuration) icon in device item '{deviceID}'"):
-        logger.info(f"Click (Go to configuration) icon in device item '{deviceID}'")
+    with step(f"Click (Go to configuration) icon in device item {deviceID}"):
+        logger.info(f"Click (Go to configuration) icon in device item {deviceID}")
         dashBoardGroup = DashBroardGroup(browser)
         dashBoardGroup.go_to_configuration_page(deviceID)
 
-@then(parsers.parse("Device '{deviceID}' configuration page is displayed"))
+@then(parsers.parse("Device {deviceID} configuration page is displayed"))
 def verify_configuration_device_page_displayed(browser, deviceID):
-    with step(f"Device '{deviceID}' configuration page is displayed"):
-        logger.info(f"Device '{deviceID}' configuration page is displayed")
+    with step(f"Device {deviceID} configuration page is displayed"):
+        logger.info(f"Device {deviceID} configuration page is displayed")
         dashBoardGroup = DashBroardGroup(browser)
         assert dashBoardGroup.is_displayed_label_device_configuration_wiget() == True
         assert dashBoardGroup.is_displayed_device_id_in_configuration_page(deviceID) == True

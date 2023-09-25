@@ -15,10 +15,12 @@ GeoSensorX = 'https://staging.geosensorx.ai'
 
 # Scenarios
 
-scenarios('../features/dc400_rpc_multiple_devices.feature')
+
 from datetime import datetime
 
 # Fixtures
+
+scenarios('../features/dc400_rpc_multiple_devices.feature')
 
 
 @pytest.fixture
@@ -35,14 +37,14 @@ def browser():
 # Given Steps
 
 
-@given(parsers.parse("Login GSX Cloud with username '{username}' and password '{password}'"))
-def login_page(browser, username, password):
+@given(parsers.parse("Login GSX Cloud with email {email} and password {password}"))
+def login_page(browser, email, password):
     # logger.info(datetime.now())
     with step("Login GSX Cloud"):
         logger.info("Login GSX Cloud")
         browser.get(GeoSensorX)
         loginPage = LoginPage(browser)
-        loginPage.doLoginPage(username, password)
+        loginPage.doLoginPage(email, password)
 
 
 @given("Go to Dashboard groups > DC400 > RPC Multiple Devices DC400")
@@ -59,7 +61,7 @@ def go_to_rpc_multiple_device(browser):
         multiplePage.openDashboardDC400()
 
 
-@given(parsers.parse("Select an active Device '{deviceName}' on the DC400 devices list"))
+@given(parsers.parse("Select an active Device {deviceName} on the DC400 devices list"))
 def select_device(browser, deviceName):
     with step(f"Select an active Device {deviceName} on the DC400 devices list"):
         multiplePage = RPCMultipleDevicePage(browser)
@@ -75,7 +77,7 @@ def select_device(browser, deviceName):
         multiplePage.selectDevice(deviceName)
 
 
-@when(parsers.parse("Select '{rpc_method}' on RPC Method Description list"))
+@when(parsers.parse("Select {rpc_method} on RPC Method Description list"))
 def select_rpc_method(browser, rpc_method):
     with step(f"Select '{rpc_method}' on RPC Method Description list"):
         multiplePage = RPCMultipleDevicePage(browser)
@@ -83,7 +85,7 @@ def select_rpc_method(browser, rpc_method):
         multiplePage.selectRPCMethod(rpc_method)
 
 
-@when(parsers.parse("Enter '{params}' on RPC parameters"))
+@when(parsers.parse("Enter {params} on RPC parameters"))
 def select_rpc_method(browser, params):
     multiplePage = RPCMultipleDevicePage(browser)
     logger.info(f'Enter {params} on RPC parameters')
@@ -97,9 +99,9 @@ def uncheck_clear_selecttion_rpc(browser):
     multiplePage.uncheck_clear_selection_after_rpc()
 
 
-@then(parsers.parse("Verify RPC command response device: '{device_name}', parameters: '{params}'"))
+@then(parsers.parse("Verify RPC command response device: {device_name}, parameters: {params}"))
 def verify_response_config_set(browser, device_name, params):
-    with step(f"Verify RPC command response device: '{device_name}', parameters: '{params}'"):
+    with step(f"Verify RPC command response device: {device_name}, parameters: {params}"):
         logger.info('verify_response_config_set')
         multiplePage = RPCMultipleDevicePage(browser)
         response = multiplePage.get_value_rpc_response()
@@ -134,7 +136,7 @@ def clear_response_history(browser):
         multiplePage.click_clear_rpc_history_response_button()
 
 
-@then(parsers.parse("Verify RPC command get response device: '{device_name}', params: '{params}', value: '{value}'"))
+@then(parsers.parse("Verify RPC command get response device: {device_name}, params: {params}, value: {value}"))
 def verify_response_config_get(browser, device_name, params, value):
     with step(f"Verify RPC command get response device: '{device_name}', params: '{params}', value: '{value}'"):
         logger.info('verify_response_config_set')
