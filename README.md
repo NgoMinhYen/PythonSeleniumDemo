@@ -7,3 +7,5 @@ Please follow below steps to setup your environment:
 - Create new env by: conda create -n "uiautomation" python=3.11.5
 - Activate "conda activate uiautomation"
 - install the dependencies by: pip install -r .\requirements.txt
+- Run test case: pytest -m "testcase" --disable-warnings --alluredir=allure-results
+- Run allure report: allure serve allure-results
